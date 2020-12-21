@@ -15,4 +15,4 @@ You must change let csvurl= 'http://xxx.yyy.edu/zzz/department-list.csv' and let
 
 # Electron build
 Nodejs code, uses Electron, and can be packaged as a standalone program.
-Loads "advanced search query texts" from (url) author-list.csv and (url) department-list.csv files, creates lists for departments and academicians. When selected, a Chrome browser window opened by puppeteer, and displays the results from Web of Science. You must have access to the Web of Science site. 
+Loads "advanced search query texts" from (url) author-list.csv and (url) department-list.csv files, creates lists for departments and academicians. When selected, a Chrome browser window opened by puppeteer, and displays the results from Web of Science. You must have access rights to the Web of Science web site.  
