@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<!-- bu yazılım Dr. Zafer Akçalı tarafından oluşturulmuştur -->
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Web of Science'da Ayrıntılı Arama - PuppetWOSnew V1.2</title>
+	<link rel="stylesheet" href="style.css" type="text/css">
+  </head>
+  <body>
+Web of Science'da AdvancedSearch arama kutusuna yazılacak metni giriniz<br />
+	<textarea id="advSearch" rows = "20" cols = "100" name = "Uzun Yazı" id="searchText"></textarea> <br />
+	<button id="gotoWOS" disabled="true" >Yukarıda yazanı ara</button> <br />  
+    Hazır arama metinleri. Seçerseniz sayfa başındaki kutuya aktarılacaktır. <br />  
+<select id="selectDepartment">
+	<option value="">Anabilim / Bilim Dalı / Şehir Seçiniz</option> 
+	<!-- rest is created by window.onload = async function()-->
+</select> 
+<br /> <br /> 
+<label for="Akademisyen seçimi">Akademisyen ismini veya bölümünü yazarak seçiniz</label>  <br />
+<input list="academicians" id="selectAcademician"/>  <!-- onchange dosesn't focus, use oninput -->
+<button id="deleteAcad" >Sil</button> 
+
+<datalist id="academicians">
+	<!-- rest is created by window.onload = async function()-->
+</datalist>
+<br />
+Sadece üniversitemdeki yayınlar <input type="checkbox" id="exclusiveUni"><br /> 
+<script>  
+	require('./renderer');
+</script>
+</body>
+</html>

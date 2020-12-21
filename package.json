@@ -1,0 +1,32 @@
+{
+  "name": "puppetwosnew",
+  "version": "1.2.0",
+  "description": "WOS Advanced Search with puppeteer",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zakcali/puppetwos.git"
+  },
+  "keywords": [
+    "Web of Science",
+    "advanced search",
+    "puppeteer"
+  ],
+  "author": "Zafer Akcali",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zakcali/puppetwos/issues"
+  },
+  "homepage": "https://github.com/zakcali/puppetwos#readme",
+  "devDependencies": {
+    "electron": "^11.1.0"
+  },
+  "dependencies": {
+    "papaparse": "^5.2.0",
+    "puppeteer-core": "^5.5.0"
+  }
+}
