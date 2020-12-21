@@ -11,6 +11,8 @@ If you don't search regulary, and know what to do this procedure is okay. But if
 Those links decribe, what how to use advanced search: http://images.webofknowledge.com/WOKRS534DR1/help/WOS/hp_advanced_search.html
 and http://images.webofknowledge.com/WOKRS534DR1/help/WOS/hp_advanced_examples.html
 
+#Downloaded files:
+You must change let csvurl= 'http://xxx.yyy.edu/zzz/department-list.csv' and let csvurl= 'http://xxx.yyy.edu/zzz/author-list.csv' url's according to your preference in renderer.js
 # Electron build
 Nodejs code, uses Electron, and can be packaged as a standalone program.
 Loads "advanced search query texts" from (url) author-list.csv and (url) department-list.csv files, creates lists for departments and academicians. When selected, a Chrome browser window opened by puppeteer, and displays the results from Web of Science. You must have access to the Web of Science site. 
