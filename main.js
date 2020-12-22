@@ -58,16 +58,16 @@ const advurl = 'https://www.webofscience.com/wos/woscc/advanced-search'
 //const title ='a[title="Use Advanced Search to Narrow Your Search to Specific Criteria"]'
 const title = 'a[title="Web of Science Beta"]' // for WOS Beta
 const moreOptionsButton='body > app-wos > div.fix-ie-min-height > div > main > div > app-input-route > app-search-home > div.advanced-search-form > div > app-input-route > app-search-advanced > app-advanced-search-form > form > button'
-optionsMat='body > app-wos > div.fix-ie-min-height > div > main > div > app-input-route > app-search-home > div.advanced-search-form > div > app-input-route > app-search-advanced > app-advanced-search-form > form > div.moreOptions.ng-star-inserted > app-autocomplete-search-input > div > div'
-matList='#mat-chip-list-0 > div > mat-placeholder'
-moreOptionsSelector = '#mat-chip-list-input-0'
-selectSSCI='#mat-option-0 > span'
-selectAHCI='#mat-option-1 > span'
-selectSCIE='#mat-option-5 > span'
-const welcomeSelector='#pendo-base'
-const welcomeCloseButton='#pendo-close-guide-2fd5c91d'
+const optionsMat='body > app-wos > div.fix-ie-min-height > div > main > div > app-input-route > app-search-home > div.advanced-search-form > div > app-input-route > app-search-advanced > app-advanced-search-form > form > div.moreOptions.ng-star-inserted > app-autocomplete-search-input > div > div'
+const matList='#mat-chip-list-0 > div > mat-placeholder'
+const moreOptionsSelector = '#mat-chip-list-input-0'
+const selectSSCI='#mat-option-0 > span'
+const selectAHCI='#mat-option-1 > span'
+const selectSCIE='#mat-option-5 > span'
+const welcomeSelector='._pendo-step-container-styles'
+const welcomeCloseButton='._pendo-close-guide'
 const guideSelector='#pendo-guide-container'
-const guideCloseButton='#pendo-close-guide-1bf0f4dd'
+const guideCloseButton='._pendo-close-guide'
 
 ipcMain.handle('makeSearch', async (event, advtext) => {
 if (advtext =='') {return;}
@@ -91,6 +91,7 @@ try {
             console.error('WOS URL unreachable!');
             process.exit(2);
         })
+try {
 pageTitle = await page.title() 
 if (pageTitle && firstSearch) {
 
@@ -114,6 +115,9 @@ if (pageTitle && firstSearch) {
 	await page.waitForSelector(selectSCIE)
 	await page.click(selectSCIE);
 	
+	}
+} catch (err) {
+  console.error(err.message)
 }
 
 if (pageTitle)    {
