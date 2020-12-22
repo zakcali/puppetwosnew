@@ -53,12 +53,21 @@ const searchButton = 'body > app-wos > div.fix-ie-min-height > div > main > div 
 const noRecordsMessage = '.search-error' // for WOS Beta
 const backToPrevious='#backToSearch' // for WOS Beta
 const backToSearch = 'backToSearch'
-
-
 const wosurl = 'https://www.webofscience.com/wos/woscc/advanced-search'
 const advurl = 'https://www.webofscience.com/wos/woscc/advanced-search'
 //const title ='a[title="Use Advanced Search to Narrow Your Search to Specific Criteria"]'
 const title = 'a[title="Web of Science Beta"]' // for WOS Beta
+const moreOptionsButton='body > app-wos > div.fix-ie-min-height > div > main > div > app-input-route > app-search-home > div.advanced-search-form > div > app-input-route > app-search-advanced > app-advanced-search-form > form > button'
+optionsMat='body > app-wos > div.fix-ie-min-height > div > main > div > app-input-route > app-search-home > div.advanced-search-form > div > app-input-route > app-search-advanced > app-advanced-search-form > form > div.moreOptions.ng-star-inserted > app-autocomplete-search-input > div > div'
+matList='#mat-chip-list-0 > div > mat-placeholder'
+moreOptionsSelector = '#mat-chip-list-input-0'
+selectSSCI='#mat-option-0 > span'
+selectAHCI='#mat-option-1 > span'
+selectSCIE='#mat-option-5 > span'
+const welcomeSelector='#pendo-base'
+const welcomeCloseButton='#pendo-close-guide-2fd5c91d'
+const guideSelector='#pendo-guide-container'
+const guideCloseButton='#pendo-close-guide-1bf0f4dd'
 
 ipcMain.handle('makeSearch', async (event, advtext) => {
 if (advtext =='') {return;}
@@ -71,6 +80,7 @@ try {
 	firstSearch = true // to tick SCI, SSCI, and AHCI again
 	pages = await browser.pages()
 	page = pages[0]
+
 //	await page.setViewport({ width: 1366, height: 768 })
 	browser.on('disconnected',async()=>{
     disconnected = true;
@@ -81,19 +91,62 @@ try {
             console.error('WOS URL unreachable!');
             process.exit(2);
         })
-	pageTitle = await page.title() 
-	if (pageTitle)    {
-		await page.waitForSelector(selectorBox);
-		await page.evaluate(selectorBox => {document.querySelector(selectorBox).value = "";}, selectorBox); // clear text area
-		await page.$eval(selectorBox, (el,value) => el.value = value, queryText);
-		await page.type(selectorBox, '.')
-		await page.click(searchButton)
-		await page.waitForNavigation({waitUntil: 'networkidle2'});
-		
+pageTitle = await page.title() 
+if (pageTitle && firstSearch) {
+
+	firstSearch = false // don't tick // tick SCI, SSCI, AHCI anymore
+	// show indexes
+	await page.waitForSelector(moreOptionsButton);   
+	await page.click(moreOptionsButton); 
+// Click SSCI
+	await page.waitForSelector(optionsMat);   
+	await page.click(matList);
+	await page.waitForSelector(selectSSCI)
+	await page.click(selectSSCI);
+// Click AHCI
+	await page.waitForSelector(moreOptionsSelector);   
+	await page.click(moreOptionsSelector);
+	await page.waitForSelector(selectAHCI)
+	await page.click(selectAHCI);
+// Click SSCIE
+	await page.waitForSelector(moreOptionsSelector);   
+	await page.click(moreOptionsSelector);
+	await page.waitForSelector(selectSCIE)
+	await page.click(selectSCIE);
+	
+}
+
+if (pageTitle)    {
+	await page.waitForSelector(selectorBox);
+	await page.evaluate(selectorBox => {document.querySelector(selectorBox).value = "";}, selectorBox); // clear text area
+	await page.$eval(selectorBox, (el,value) => el.value = value, queryText);
+	await page.type(selectorBox, '.')
+	await page.click(searchButton)
+	await page.waitForNavigation({waitUntil: 'networkidle2'});
 	}
+try {
+helpModal = await page.waitForSelector(welcomeSelector) 
+if (helpModal)    {
+	await page.waitForSelector(welcomeCloseButton)
+	await page.click(welcomeCloseButton);
+	}
+} catch (err) {
+  console.error(err.message)
+}
+try {
+guideModal = await page.waitForSelector(guideSelector)
+if (guideModal)    {
+	await page.waitForSelector(guideCloseButton)
+	await page.click(guideCloseButton);
+	}
+} catch (err) {
+  console.error(err.message)
+}
+
+
   })()
 } catch (err) {
-  console.error(err)
+  console.error(err.message)
 }
 
 })
