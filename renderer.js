@@ -9,7 +9,8 @@ const depList = document.querySelector ('#selectDepartment');
 const acadList = document.querySelector ('#selectAcademician');
 const clearBtn = document.querySelector ('#deleteAcad');
 const wosBtn = document.querySelector ('#gotoWOS');
-const advText= document.querySelector('#advSearch');
+const advText = document.querySelector('#advSearch');
+const sciCheckBox = document.querySelector('#onlySCI');
 depList.addEventListener('change', () => {
 copyQueryText(depList.options[depList.selectedIndex].value);
 });
@@ -20,7 +21,7 @@ clearBtn.addEventListener('click', () => {
 clearAcademician()
 });
 wosBtn.addEventListener('click', async () => {
-const ipcresult = await ipcRenderer.invoke('makeSearch', advText.value); 
+const ipcresult = await ipcRenderer.invoke('makeSearch', advText.value, sciCheckBox.checked); 
 
 });
 

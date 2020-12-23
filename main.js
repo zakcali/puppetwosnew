@@ -68,8 +68,11 @@ const welcomeSelector='._pendo-step-container-styles'
 const welcomeCloseButton='._pendo-close-guide'
 const guideSelector='#pendo-guide-container'
 const guideCloseButton='._pendo-close-guide'
+var closeHelp=true
+var closeGuide=true
 
-ipcMain.handle('makeSearch', async (event, advtext) => {
+
+ipcMain.handle('makeSearch', async (event, advtext, onlySCI) => {
 if (advtext =='') {return;}
 const queryText=advtext; // important to be able to paste instead of typing !!! 
 try {
@@ -93,7 +96,7 @@ try {
         })
 try {
 pageTitle = await page.title() 
-if (pageTitle && firstSearch) {
+if (pageTitle && firstSearch && onlySCI) {
 
 	firstSearch = false // don't tick // tick SCI, SSCI, AHCI anymore
 	// show indexes
@@ -116,10 +119,6 @@ if (pageTitle && firstSearch) {
 	await page.click(selectSCIE);
 	
 	}
-} catch (err) {
-  console.error(err.message)
-}
-
 if (pageTitle)    {
 	await page.waitForSelector(selectorBox);
 	await page.evaluate(selectorBox => {document.querySelector(selectorBox).value = "";}, selectorBox); // clear text area
@@ -128,20 +127,25 @@ if (pageTitle)    {
 	await page.click(searchButton)
 	await page.waitForNavigation({waitUntil: 'networkidle2'});
 	}
-try {
-helpModal = await page.waitForSelector(welcomeSelector) 
+
+} catch (err) {
+  console.error(err.message)
+}
+
+if (closeHelp)try {
+helpModal = await page.waitForSelector(welcomeSelector, {visible: true}) 
 if (helpModal)    {
-	await page.waitForSelector(welcomeCloseButton)
-	await page.click(welcomeCloseButton);
+	await page.waitForSelector(welcomeCloseButton, {visible: true})
+	await page.click(welcomeCloseButton).then(()=>{closeHelp=false});
 	}
 } catch (err) {
   console.error(err.message)
 }
-try {
-guideModal = await page.waitForSelector(guideSelector)
+if (closeGuide)try {
+guideModal = await page.waitForSelector(guideSelector, {visible: true})
 if (guideModal)    {
-	await page.waitForSelector(guideCloseButton)
-	await page.click(guideCloseButton);
+	await page.waitForSelector(guideCloseButton, {visible: true})
+	await page.click(guideCloseButton).then(()=>{closeGuide=false});
 	}
 } catch (err) {
   console.error(err.message)

@@ -3,7 +3,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Web of Science'da Ayrıntılı Arama - PuppetWOSnew V1.35</title>
+    <title>Web of Science'da Ayrıntılı Arama - PuppetWOSnew V1.4</title>
 	<link rel="stylesheet" href="style.css" type="text/css">
   </head>
   <body>
@@ -23,8 +23,9 @@ Web of Science'da AdvancedSearch arama kutusuna yazılacak metni giriniz<br />
 <datalist id="academicians">
 	<!-- rest is created by window.onload = async function()-->
 </datalist>
-<br />
-Sadece üniversitemdeki yayınlar <input type="checkbox" id="exclusiveUni"><br /> 
+<br/>
+<input type="checkbox" id="exclusiveUni"> Sadece üniversitemdeki yayınlar <br/>
+<input type="checkbox" id="onlySCI" checked>Sadece SCIE, SSCI, AHCI yayınları (Bu indeksleri bir kez işaretledikten sonra işaretleri geri almaz)<br/> 
 <script>  
 	require('./renderer');
 </script>
